@@ -16,7 +16,7 @@
     "paper-icon-button": "PolymerElements/paper-icon-button#~1.1.0",
     "polymer": "Polymer/polymer#^1.6.0"
   },
-  "description": "polymer custom element creation",
+  "description": "news portal polymer version",
   "main": "index.html",
   "license": "MIT",
   "homepage": "",
