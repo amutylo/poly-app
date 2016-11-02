@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="html-echo">
+
+    <template>
+        <span>{{html}}</span>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'html-echo',
+            properties: {
+                html: {
+                    type: String,
+                    value: 'html'
+                },
+                wrappertag: {
+                    type: String,
+                    value: ''
+                },
+                width: {
+                    type: String,
+                    value: ''
+                },
+                height: {
+                    type: String,
+                    value: ''
+                },
+                htmlcond: {
+                    type: String,
+                    value: ''
+                }
+            },
+            ready: function() {
+                if (this.htmlcond == 'raw') {
+                    var str = this.html;
+                    var regex = /<!--[\s\S]*?-->/g;
+                    var rendHtml = str.replace(regex,'').trim();
+                }
+                else{
+                    var rendHtml = this.html;
+                }
+
+                switch (this.wrappertag) {
+                    case 'img':
+                        var width = (this.width && this.width.length)? this.width : '';
+                        var height = (this.height && this.height.length)? this.height : '';
+
+                        this.innerHTML = '<img src="' + rendHtml + '" width="'+ width + ' " height="' + height + '" />';
+                        break;
+                    default:
+                        this.innerHTML = rendHtml;
+                        break;
+                }
+
+
+            }
+        });
+    </script>
+
+</dom-module>

@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="html-echo.html"/>
+
+<dom-module id="app-content">
+    <style></style>
+    <template>
+        <iron-ajax
+                auto
+                url="http://news-portal.lc/restfront"
+                handle-as="json"
+                last-response="{{response}}">
+        </iron-ajax>
+        <div class="main-content">
+            <template is="dom-repeat" items="[[response]]">
+                <div class="content-item">
+                    <span class="img">
+                        <html-echo html="{{item.img}}" wrappertag="img" width="220px" height="138px" htmlcond="raw"></html-echo>
+                    </span>
+                    <span>
+                        <a href="/node/{{item.id}}">
+                            {{item.title}}
+                        </a>
+                    </span>
+                    <div class="body">
+                        <html-echo html="{{item.desc}}" ></html-echo>
+                    </div>
+                    <span>{{item.cat}}</span>
+                </div>
+            </template>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "app-content"
+    });
+</script>

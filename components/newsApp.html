@@ -8,6 +8,8 @@
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="app-content.html"/>
+
 
 
 <dom-module id="news-app">
@@ -61,8 +63,21 @@
     <app-drawer-layout>
       <app-drawer>
         <app-toolbar></app-toolbar>
+        <iron-ajax
+                auto
+                url="http://news-portal.lc/catlist"
+                handle-as="json"
+                last-response="{{response}}">
+        </iron-ajax>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <template is="dom-repeat" items="[[response]]">
+            <li><a href="/term/{{item.id}}">{{item.name}}</a></li>
+          </template>
+        </ul>
       </app-drawer>
     <h1>{{ title }}</h1>
+      <app-content></app-content>
     </app-drawer-layout>
 
   </template>
@@ -82,21 +97,21 @@
           observer: '_pageChanged'
         }
     },
-    observers: [
-        '_routePageChanged(routeData.page)'
-      ],
-    _routePageChanged: function(page) {
-        this.page = page || 'view1';
-      },
-
-      _pageChanged: function(page) {
-        // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl(page + '.html');
-        this.importHref(resolvedPageUrl, null, this._showPage404, true);
-      },
-
-      _showPage404: function() {
-        this.page = 'view404';
-      }
+//    observers: [
+//        '_routePageChanged(routeData.page)'
+//      ],
+//    _routePageChanged: function(page) {
+//        this.page = page || 'view1';
+//      },
+//
+//      _pageChanged: function(page) {
+//        // Load page import on demand. Show 404 page if fails
+//        var resolvedPageUrl = this.resolveUrl(page + '.html');
+//        this.importHref(resolvedPageUrl, null, this._showPage404, true);
+//      },
+//
+//      _showPage404: function() {
+//        this.page = 'view404';
+//      }
   });
 </script>
